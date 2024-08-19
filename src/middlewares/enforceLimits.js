@@ -33,8 +33,11 @@ module.exports = async function enforceLimits(req, res, next) {
         // Check API usage limit
         if (foundUser.apiCallsUsed >= foundUser.licensePlan.maxApiCalls) {
           return res
-            .status(429)
-            .json({ error: 'LimitExceededError: API usage limit exceeded' });
+            .status(403)
+            .json({
+              error: 'LimitExceededError',
+              message: 'API usage limit exceeded for the current plan',
+            });
         }
 
         foundUser.apiCallsUsed += 1;

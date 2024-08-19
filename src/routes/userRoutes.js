@@ -11,7 +11,7 @@ router.get('/', userController.getUsers);
 router.post('/', checkForAdminRights, userController.createUser);
 
 // Route to update a user by ID
-router.put('/patch/:id', userController.updateUser);
+router.put('/edit/:id', userController.updateUser);
 
 // Route to delete a user by ID
 router.delete('/delete/:id', userController.deleteUser);

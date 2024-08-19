@@ -8,8 +8,6 @@ const bcrypt = require('bcrypt');
 const userController = {
   createUser: async (req, res) => {
     try {
-      console.log('prbodyyyyyck  ----- ', JSON.stringify(req.body));
-
       const { emailId, password, planId, name, isAdmin } = req.body;
       const userExist = await User.findOne({ emailId });
       if (userExist) {
@@ -30,7 +28,6 @@ const userController = {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
       const userPlan = await LicensePlan.findById({ _id: planId });
-      console.log('user plan ----- ', JSON.stringify(userPlan));
       const newUser = new User({
         emailId,
         name,
@@ -67,10 +64,19 @@ const userController = {
   updateUser: async (req, res) => {
     try {
       const { id } = req.params;
-      const { username, licensePlanId } = req.body;
+      const { username, licensePlanId, emailId } = req.body;
+      //check if email already exists
+      const userFound = await User.findOne({ emailId });
+      if (userFound) {
+        return res.status(400).json({
+          success: false,
+          message: 'User already exists with this emailId',
+        });
+      }
+
       const updatedUser = await User.findByIdAndUpdate(
         id,
-        { username, licensePlan: licensePlanId },
+        { username, licensePlan: licensePlanId, emailId },
         { new: true, runValidators: true }
       );
 

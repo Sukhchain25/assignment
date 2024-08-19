@@ -1,25 +1,23 @@
-// index.js
 const app = require('./app');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config();
 const { seedLicensePlans } = require('./seed');
+const logger = require('./src/shared/logger');
 const PORT = process.env.PORT;
 const MONGO_URI =
   process.env.MONGO_URI || 'mongodb://localhost:27017/licensing-system';
 
-// Connect to MongoDB
+//connecting to
 mongoose
-  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGO_URI)
   .then(async () => {
-    console.log('Connected to MongoDB');
-    // Seed initial data
+    logger.info('Connected to database ...');
+    //seeding initial data
     await seedLicensePlans();
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      logger.info(`Server running on port ${PORT}`);
     });
   })
   .catch((err) => {
-    console.error('Database connection error:', err);
+    logger.error(`Database connection error:`, err.message || error);
     process.exit(1);
   });
