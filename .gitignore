@@ -1,0 +1,16 @@
+# Node.js dependencies
+/node_modules/
+
+# Environment variables
+.env
+
+# Build output
+/dist
+/build
+
+# Mac system files
+.DS_Store
+
+# NPM package lock file (optional)
+package-lock.json
+
