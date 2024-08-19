@@ -1,11 +1,18 @@
-// models/user.model.js
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  username: {
+  emailId: {
     type: String,
     required: true,
     unique: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
   },
   licensePlan: {
     type: mongoose.Schema.Types.ObjectId,
@@ -16,6 +23,7 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  isAdmin: { type: Boolean },
 });
 
 module.exports = mongoose.model('User', userSchema);

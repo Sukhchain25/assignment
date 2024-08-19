@@ -15,7 +15,8 @@ describe('API Usage Limit Enforcement', () => {
     });
     user = await User.create({
       name: 'Test User',
-      email: 'test@example.com',
+      emailId: 'test@example.com',
+      password: 'dummy@11!',
       licensePlan: plan._id,
     });
   });

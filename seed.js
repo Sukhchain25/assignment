@@ -4,8 +4,8 @@ const LicensePlan = require('./src/models/licensePlan.model');
 async function seedLicensePlans() {
   try {
     const plans = [
-      { name: 'Basic Plan', maxApiCalls: 100, price: 10 },
-      { name: 'Premium Plan', maxApiCalls: 1000, price: 50 },
+      { name: 'Basic Plan', maxApiCalls: 10, price: 10 },
+      { name: 'Premium Plan', maxApiCalls: 20, price: 50 },
     ];
 
     for (const plan of plans) {

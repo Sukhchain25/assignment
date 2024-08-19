@@ -5,7 +5,8 @@ const path = require('path');
 const licenseRoutes = require('./src/routes/licenseRoutes');
 const usageRoutes = require('./src/routes/usageRoutes');
 const userRoutes = require('./src/routes/userRoutes');
-
+const dotenv = require('dotenv');
+dotenv.config();
 const app = express();
 
 // Middleware

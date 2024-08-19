@@ -1,4 +1,3 @@
-// models/licensePlan.model.js
 const mongoose = require('mongoose');
 
 const licensePlanSchema = new mongoose.Schema({

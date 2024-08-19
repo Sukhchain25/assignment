@@ -2,24 +2,56 @@
 const User = require('../models/user.model');
 const LicensePlan = require('../models/licensePlan.model');
 const logger = require('../shared/logger');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const userController = {
   createUser: async (req, res) => {
     try {
-      const { username, licensePlanId } = req.body;
-      const licensePlan = await LicensePlan.findById(licensePlanId);
+      console.log('prbodyyyyyck  ----- ', JSON.stringify(req.body));
 
-      if (!licensePlan) {
-        return res.status(404).json({ error: 'License plan not found' });
+      const { emailId, password, planId, name, isAdmin } = req.body;
+      const userExist = await User.findOne({ emailId });
+      if (userExist) {
+        return res.status(401).json({
+          success: false,
+          message: 'Email already exist',
+        });
       }
-
-      const user = new User({ username, licensePlan: licensePlanId });
-      await user.save();
-      logger.info('User created!');
-      res.status(201).json(user);
-    } catch (error) {
-      logger.error(`Error - userController: ${error.message || error}`);
-      res.status(400).json({ error: error.message });
+      const token = await jwt.sign(
+        {
+          emailId,
+          name,
+          planId,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: '1d' }
+      );
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      const userPlan = await LicensePlan.findById({ _id: planId });
+      console.log('user plan ----- ', JSON.stringify(userPlan));
+      const newUser = new User({
+        emailId,
+        name,
+        password: hashedPassword,
+        licensePlan: userPlan,
+        isAdmin,
+      });
+      await newUser.save();
+      logger.info('signUp api - User saved');
+      return res.status(201).json({
+        success: true,
+        message: 'User saved successfully',
+        data: newUser,
+        token,
+      });
+    } catch (err) {
+      logger.error(`CreateUser - Error: ${err.message || err}`);
+      return res.status(500).json({
+        success: false,
+        message: err.message || 'Something went wrong',
+      });
     }
   },
 
