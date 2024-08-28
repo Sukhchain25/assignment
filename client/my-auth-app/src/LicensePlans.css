@@ -1,0 +1,97 @@
+/* Ensure the body and html take up the full height */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif; /* Set a default font */
+}
+
+/* Basic styling for the license plans container */
+.license-plans-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+  background: #f0f4f8; /* Light background for contrast */
+  border-radius: 12px; /* Rounded corners for a soft look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
+  min-height: 80vh; /* Ensure the container has some minimum height */
+}
+
+h2 {
+  text-align: center;
+  color: #333; /* Dark color for the heading */
+  margin-bottom: 20px;
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; /* Center the cards */
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 250px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  background-color: #e0f7fa; /* Light cyan background on hover */
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.card.selected {
+  border-color: #007bff; /* Blue border for selected card */
+  background-color: #e3f2fd; /* Light blue background for selected card */
+}
+
+.card h3 {
+  color: #007bff; /* Blue color for the card title */
+  margin: 0 0 10px;
+  font-size: 1.2em;
+}
+
+.card p {
+  margin: 8px 0;
+  color: #555; /* Darker text color for the details */
+}
+
+.card p.price {
+  font-weight: bold; /* Emphasize the price */
+  color: #007bff; /* Blue color for the price */
+}
+
+.select-plan-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #007bff; /* Blue background */
+  color: #fff; /* White text */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.select-plan-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05);
+}
+
+.count-left {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #333;
+}

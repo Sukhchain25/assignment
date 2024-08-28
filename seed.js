@@ -1,5 +1,5 @@
 // seed.js
-const LicensePlan = require('./src/models/licensePlan.model');
+const LicensePlan = require('./server/models/licensePlan.model');
 
 async function seedLicensePlans() {
   try {
