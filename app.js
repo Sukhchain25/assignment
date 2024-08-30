@@ -1,25 +1,20 @@
-// app.js
-const express = require("express");
-const bodyParser = require("body-parser");
-const path = require("path");
-const licenseRoutes = require("./server/routes/licenseRoutes");
-const usageRoutes = require("./server/routes/usageRoutes");
-const userRoutes = require("./server/routes/userRoutes");
-const dotenv = require("dotenv");
-const cors = require("cors");
+import express from "express";
+import bodyParser from "body-parser";
+import path from "path";
+import licenseRoutes from "./server/routes/licenseRoutes.js";
+import usageRoutes from "./server/routes/usageRoutes.js";
+import userRoutes from "./server/routes/userRoutes.js";
+import dotenv from "dotenv";
+import cors from "cors";
+
 dotenv.config();
+
 const app = express();
 app.use(cors());
+
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Static files
-app.use(express.static(path.join(__dirname, "public")));
-
-// View engine
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
 
 // Routes
 app.use("/api/licenses", licenseRoutes);
@@ -41,4 +36,4 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Something went wrong!" });
 });
 
-module.exports = app;
+export default app;

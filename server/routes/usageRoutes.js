@@ -1,9 +1,9 @@
-// routes/usageRoutes.js
-const express = require("express");
+import express from "express";
+import enforceLimits from "../middlewares/enforceLimits.js";
+import usageController from "../controller/usageController.js";
+
 const router = express.Router();
-const enforceLimits = require("../middlewares/enforceLimits");
-const usageController = require("../controller/usageController");
 
 router.get("/demo-endpoint", enforceLimits, usageController.checkUsage);
 
-module.exports = router;
+export default router;

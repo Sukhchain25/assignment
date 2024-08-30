@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const licensePlanSchema = new mongoose.Schema(
   {
@@ -9,5 +9,5 @@ const licensePlanSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const LicensePlan = mongoose.model('LicensePlan', licensePlanSchema);
-module.exports = LicensePlan;
+const LicensePlan = mongoose.model("LicensePlan", licensePlanSchema);
+export default LicensePlan;

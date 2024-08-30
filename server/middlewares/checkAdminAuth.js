@@ -1,8 +1,7 @@
-// middlewares/enforceLimits.js
-module.exports = async function checkForAdminRights(req, res, next) {
+export default async function checkForAdminRights(req, res, next) {
   try {
-    console.log('here in middleware');
-    const apiKey = req.header('x-api-key');
+    console.log("here in middleware");
+    const apiKey = req.header("x-api-key");
     const isAdmin = req.body.isAdmin;
 
     if (isAdmin) {
@@ -11,7 +10,7 @@ module.exports = async function checkForAdminRights(req, res, next) {
       } else {
         return res.status(401).json({
           success: false,
-          message: 'Invalid API key. Not authorized as an admin',
+          message: "Invalid API key. Not authorized as an admin",
         });
       }
     } else {
@@ -20,4 +19,4 @@ module.exports = async function checkForAdminRights(req, res, next) {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-};
+}

@@ -1,17 +1,11 @@
-const express = require('express');
+import express from "express";
+import licenseController from "../controller/licenseController.js";
+
 const router = express.Router();
-const licenseController = require('../controller/licenseController');
 
-// Route to get all license plans
-router.get('/', licenseController.getLicensePlans);
+router.get("/", licenseController.getLicensePlans);
+router.post("/", licenseController.createLicensePlan);
+router.put("/:id", licenseController.updateLicensePlan);
+router.delete("/:id", licenseController.deleteLicensePlan);
 
-// Route to create a new license plan
-router.post('/', licenseController.createLicensePlan);
-
-// Route to update a license plan by ID
-router.put('/:id', licenseController.updateLicensePlan);
-
-// Route to delete a license plan by ID
-router.delete('/:id', licenseController.deleteLicensePlan);
-
-module.exports = router;
+export default router;

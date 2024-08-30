@@ -1,8 +1,7 @@
-// tests/license.test.js
-const request = require('supertest');
-const app = require('../../app');
-const User = require('../models/user.model');
-const LicensePlan = require('../models/licensePlan.model');
+import request from 'supertest';
+import app from '../../app';
+import User from '../models/user.model';
+import LicensePlan from '../models/licensePlan.model';
 
 describe('API Usage Limit Enforcement', () => {
   let user;

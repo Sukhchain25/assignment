@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "a licensing module that enforces API usage limits based on the user's license plan",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon index.js"

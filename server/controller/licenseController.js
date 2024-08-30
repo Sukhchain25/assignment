@@ -1,5 +1,5 @@
-const LicensePlan = require('../models/licensePlan.model');
-const logger = require('../shared/logger');
+import LicensePlan from "../models/licensePlan.model.js";
+import logger from "../shared/logger.js";
 
 const licenseController = {
   createLicensePlan: async (req, res) => {
@@ -7,7 +7,7 @@ const licenseController = {
       const { name, maxApiCalls, price } = req.body;
       const licensePlan = new LicensePlan({ name, maxApiCalls, price });
       await licensePlan.save();
-      logger.info('License plan saved!');
+      logger.info("License plan saved!");
       res.status(201).json(licensePlan);
     } catch (error) {
       logger.error(`Error - licenseController: ${error.message || error}`);
@@ -35,7 +35,7 @@ const licenseController = {
       );
 
       if (!updatedPlan) {
-        return res.status(404).json({ error: 'License plan not found' });
+        return res.status(404).json({ error: "License plan not found" });
       }
 
       logger.info(`License plan updated: ${id}`);
@@ -52,11 +52,11 @@ const licenseController = {
       const deletedPlan = await LicensePlan.findByIdAndDelete(id);
 
       if (!deletedPlan) {
-        return res.status(404).json({ error: 'License plan not found' });
+        return res.status(404).json({ error: "License plan not found" });
       }
 
       logger.info(`License plan deleted: ${id}`);
-      res.status(200).json({ message: 'License plan deleted successfully' });
+      res.status(200).json({ message: "License plan deleted successfully" });
     } catch (error) {
       logger.error(`Error - licenseController: ${error.message || error}`);
       res.status(400).json({ error: error.message });
@@ -64,4 +64,4 @@ const licenseController = {
   },
 };
 
-module.exports = licenseController;
+export default licenseController;

@@ -1,11 +1,11 @@
 // seed.js
-const LicensePlan = require('./server/models/licensePlan.model');
+import LicensePlan from "./server/models/licensePlan.model.js";
 
 async function seedLicensePlans() {
   try {
     const plans = [
-      { name: 'Basic Plan', maxApiCalls: 10, price: 10 },
-      { name: 'Premium Plan', maxApiCalls: 20, price: 50 },
+      { name: "Basic Plan", maxApiCalls: 10, price: 10 },
+      { name: "Premium Plan", maxApiCalls: 20, price: 50 },
     ];
 
     for (const plan of plans) {
@@ -16,8 +16,8 @@ async function seedLicensePlans() {
       }
     }
   } catch (error) {
-    console.error('Error seeding license plans:', error);
+    console.error("Error seeding license plans:", error);
   }
 }
 
-module.exports = { seedLicensePlans };
+export default seedLicensePlans;

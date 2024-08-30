@@ -1,20 +1,19 @@
-// controllers/userController.js
-const User = require("../models/user.model");
-const LicensePlan = require("../models/licensePlan.model");
-const logger = require("../shared/logger");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+import User from "../models/user.model.js";
+import LicensePlan from "../models/licensePlan.model.js";
+import logger from "../shared/logger.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const userController = {
   signUp: async (req, res) => {
     try {
       const { emailId, password, name, isAdmin } = req.body;
-      console.log("body ---- ", req.body);
+      emailId.toLowerCase();
       const userExist = await User.findOne({ emailId });
       if (userExist) {
         return res.status(401).json({
           success: false,
-          message: "Email already exist",
+          message: "Email already exists",
         });
       }
 
@@ -31,10 +30,9 @@ const userController = {
       return res.status(201).json({
         success: true,
         message: "User saved successfully",
-        data: newUser,
       });
     } catch (err) {
-      logger.error(`CreateUser - Error: ${err.stack || err.essage || err}`);
+      logger.error(`CreateUser - Error: ${err.stack || err.message || err}`);
       return res.status(500).json({
         success: false,
         message: err.message || "Something went wrong",
@@ -45,7 +43,6 @@ const userController = {
   signIn: async (req, res) => {
     try {
       const { emailId, password } = req.body;
-      // Check if the user exists
       const user = await User.findOne({ emailId });
 
       if (!user) {
@@ -55,15 +52,13 @@ const userController = {
         });
       }
 
-      // Check if the password matches
       const correctPwd = await bcrypt.compare(password, user.password);
       if (correctPwd) {
-        // Generate JWT token
         const accessToken = jwt.sign(
           {
             emailId,
             name: user.name,
-            userId: user._id, // Including userId can be useful for identifying the user in other requests
+            userId: user._id,
           },
           process.env.JWT_SECRET,
           { expiresIn: "1d" }
@@ -107,20 +102,27 @@ const userController = {
     try {
       const { emailId } = req.user;
       const { planId } = req.body;
-      //check if email already exists
+
       const user = await User.findOne({ emailId });
+      const alreadyHavPlan = user.hasOwnProperty("licensePlan");
+      if (alreadyHavPlan) {
+        return res.status(400).json({
+          success: false,
+          message: "You have already seleted a plan",
+        });
+      }
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
+
       const licensePlan = await LicensePlan.findById(planId);
       if (!licensePlan) {
         return res.status(404).json({ message: "License plan not found" });
       }
 
-      // Update user with the license plan
       user.licensePlan = licensePlan._id;
       await user.save();
-      logger.info(`Plan updated`);
+      logger.info("Plan updated");
       res.status(200).json({
         success: true,
         message: "Plan selected successfully",
@@ -149,4 +151,4 @@ const userController = {
   },
 };
 
-module.exports = userController;
+export default userController;

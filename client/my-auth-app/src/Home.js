@@ -12,12 +12,12 @@ const Home = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const endpoint = isSignUp
-      ? "http://localhost:3001/api/users/sign-up"
-      : "http://localhost:3001/api/users/sign-in";
+      ? "http://localhost:3002/api/users/sign-up"
+      : "http://localhost:3002/api/users/sign-in";
 
     try {
       const response = await axios.post(endpoint, { emailId, name, password });
-      // Store JWT token in localStorage
+
       if (isSignUp && response.status === 201) {
         setMessage("Sign-up successful! Redirecting to Sign In page...");
         setEmail("");
@@ -26,15 +26,20 @@ const Home = () => {
           setIsSignUp(false);
         }, 2000);
       }
-      localStorage.setItem("jwtToken", response.data.token);
-      setMessage("Sign-up successful! Redirecting to Sign In page...");
 
-      // Redirect to license plans page if sign-in
       if (!isSignUp) {
+        localStorage.setItem("jwtToken", response.data.token);
+        setMessage("Sign-in successful! Redirecting to license plans page...");
         window.location.href = "/license-plans"; // Redirect to license plans page
       }
     } catch (error) {
-      setMessage(error.response?.data?.error || "Something went wrong.");
+      // Handle specific error messages from the API
+      if (error.response && error.response.status === 400) {
+        // Assuming the API returns a specific message for existing users
+        setMessage(error.response.data.message || "User already exists.");
+      } else {
+        setMessage(error.response?.data?.error || "Something went wrong.");
+      }
     }
   };
 
