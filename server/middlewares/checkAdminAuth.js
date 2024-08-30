@@ -1,7 +1,6 @@
 export default async function checkForAdminRights(req, res, next) {
   try {
-    console.log("here in middleware");
-    const apiKey = req.header("x-api-key");
+    const apiKey = req.header("x-api-key"); //for admin if necessary
     const isAdmin = req.body.isAdmin;
 
     if (isAdmin) {

@@ -44,7 +44,6 @@ const userController = {
     try {
       const { emailId, password } = req.body;
       const user = await User.findOne({ emailId });
-
       if (!user) {
         return res.status(400).json({
           success: false,
@@ -93,6 +92,16 @@ const userController = {
     try {
       const users = await User.find().populate("licensePlan");
       res.status(200).json(users);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },
+
+  getUserByEmail: async (req, res) => {
+    try {
+      const emailId = req.query.emailId;
+      const user = await User.findOne({ emailId }).populate("licensePlan");
+      res.status(200).json(user);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
